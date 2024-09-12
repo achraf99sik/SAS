@@ -14,13 +14,14 @@ struct list_etudiants{
     float Note_generale[max_etud];
     int moyenne[max_etud];
 };
-int info;
-int phy;
-int bio;
-int math;
+int info=0;
+int IVsuop;
+int phy=0;
+int bio=0;
+int math=0;
 int co = 0;
-int geo;
-int chem;
+int geo=0;
+int chem=0;
 char temp_nom[max_etud][max_len];
 char temp_pren[max_etud][max_len];
 char temp_date[max_etud][max_len];
@@ -111,7 +112,7 @@ int ajout(int indice){
     scanf("%f",&list.Note_generale[indice]);
     list.Numero_unique[indice]=indice+1;
     indice++;
-    return indice;
+    return indice , chem;
 }
 void Modifier(int num_uni){
     printf("entre le numero unique de l'etudiant que tu pe modifier: ");
@@ -445,7 +446,7 @@ void rechercher(){
         switch(Isuop){
         case 1:
             for(i=0;i<indice;i++){
-                if (strcmp(list.Departement[i],a[0])==0){
+                if (strcmp(list.Departement[i],a[Isuop-1])==0){
                     printf("================================\n");
                     printf("nom: %s\n",list.Nom[i]);
                     printf("prenome: %s\n",list.prenome[i]);
@@ -458,7 +459,7 @@ void rechercher(){
             break;
         case 2:
             for(i=0;i<indice;i++){
-                if (strcmp(list.Departement[i],a[1])==0){
+                if (strcmp(list.Departement[i],a[Isuop-1])==0){
                     printf("================================\n");
                     printf("nom: %s\n",list.Nom[i]);
                     printf("prenome: %s\n",list.prenome[i]);
@@ -471,7 +472,7 @@ void rechercher(){
             break;
         case 3:
             for(i=0;i<indice;i++){
-                if (strcmp(list.Departement[i],a[2])==0){
+                if (strcmp(list.Departement[i],a[Isuop-1])==0){
                     printf("================================\n");
                     printf("nom: %s\n",list.Nom[i]);
                     printf("prenome: %s\n",list.prenome[i]);
@@ -484,7 +485,7 @@ void rechercher(){
             break;
         case 4:
             for(i=0;i<indice;i++){
-                if (strcmp(list.Departement[i],a[3])==0){
+                if (strcmp(list.Departement[i],a[Isuop-1])==0){
                     printf("================================\n");
                     printf("nom: %s\n",list.Nom[i]);
                     printf("prenome: %s\n",list.prenome[i]);
@@ -497,7 +498,7 @@ void rechercher(){
             break;
         case 5:
             for(i=0;i<indice;i++){
-                if (strcmp(list.Departement[i],a[4])==0){
+                if (strcmp(list.Departement[i],a[Isuop-1])==0){
                     printf("================================\n");
                     printf("nom: %s\n",list.Nom[i]);
                     printf("prenome: %s\n",list.prenome[i]);
@@ -510,7 +511,7 @@ void rechercher(){
             break;
         case 6:
             for(i=0;i<indice;i++){
-                if (strcmp(list.Departement[i],a[5])==0){
+                if (strcmp(list.Departement[i],a[Isuop-1])==0){
                     printf("================================\n");
                     printf("nom: %s\n",list.Nom[i]);
                     printf("prenome: %s\n",list.prenome[i]);
@@ -563,13 +564,33 @@ int main()
             Afficher(i);
             break;
         case 4:
-            moyenne_generale(result);
-            moyenne_Departement(result);
+            printf("====================================================================\n");
+            printf("* 1) afficher la moyenne générale de l’université entière.         *\n");
+            printf("* 2) afficher la moyenne générale de chaque département.           *\n");
+            printf("* 3) annuler.                                                      *\n");
+            printf("====================================================================\n");
+            printf("choisissez une option (1-3): ");
+            scanf("%d",&IVsuop);
+            switch(IVsuop){
+            case 1:
+                moyenne_generale(result);
+                break;
+            case 2:
+                moyenne_Departement(result);
+                break;
+            case 3:
+                break;
+            default:
+                printf("se choix ne pas valider rentrer auter choix.\n");
+                break;
+            }
             break;
         case 5:
             statestique();
+            break;
         case 6:
             rechercher();
+            break;
         }
     }
 
