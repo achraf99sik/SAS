@@ -14,10 +14,19 @@ struct list_etudiants{
     float Note_generale[max_etud];
     int moyenne[max_etud];
 };
+int info;
+int phy;
+int bio;
+int math;
+int co = 0;
+int geo;
+int chem;
 int indice=0;
 int Isuop;
+int IIIsuop;
 int i;
-int result=0;
+int seuil =14;
+float result;
 int num_uni;
 struct list_etudiants list;
 int menu(int choix){
@@ -66,21 +75,27 @@ int ajout(int indice){
     switch(Isuop){
     case 1:
         strcpy(list.Departement[indice],"informatique");
+        info++;
         break;
     case 2:
         strcpy(list.Departement[indice],"physique");
+        phy++;
         break;
     case 3:
         strcpy(list.Departement[indice],"Biologie");
+        bio++;
         break;
     case 4:
         strcpy(list.Departement[indice],"mathematiques");
+        math++;
         break;
     case 5:
         strcpy(list.Departement[indice],"geologie");
+        geo++;
         break;
     case 6:
         strcpy(list.Departement[indice],"chemie");
+        chem++;
         break;
     default:
         printf("option unvalid!!\n");
@@ -158,6 +173,7 @@ void supprimer(int num_uni){
             strcpy(list.Departement[count],list.Departement[count+1]);
             list.Note_generale[count]=list.Note_generale[count+1];
         }
+        indice--;
     }
 }
 void Afficher(int i){
@@ -171,7 +187,7 @@ void Afficher(int i){
         printf("================================\n");
     }
 }
-float moyenne_Departement(int result){
+float moyenne_Departement(float result){
     int c=0;
     printf("================Departement================\n");
     printf("*                                         *\n");
@@ -235,16 +251,101 @@ float moyenne_Departement(int result){
         result += list.moyenne[i];
     }
     result = result/c;
-    printf("%f",result);
+    printf("la moyenne generale de set departement est: %f\n",result);
 }
-float moyenne_generale(){
-    int result=0;
+float moyenne_generale(float result){
+    result=0;
     for(int i=0;i<indice;i++){
-        printf("%d",i);
         result += list.Note_generale[i];
     }
     result = result/indice;
-    printf("%f",result);
+    printf("la moyenne generale de l'universite: %f\n",result);
+}
+void statestique(){
+    printf("=====================================Statistiques=====================================\n");
+    printf("*                                                                                    *\n");
+    printf("* choisissez une option de list suivent:                                             *\n");
+    printf("*                                                                                    *\n");
+    printf("* 1) Afficher le nombre total d'étudiants inscrits.                                  *\n");
+    printf("* 2) Afficher le nombre d'étudiants dans chaque département.                         *\n");
+    printf("* 3) Afficher les étudiants ayant une moyenne générale supérieure à un certain seuil.*\n");
+    printf("* 4) Afficher les 3 étudiants ayant les meilleures notes.                            *\n");
+    printf("* 5) Afficher le nombre d'étudiants ayant réussi dans chaque département.            *\n");
+    printf("======================================================================================\n");
+    printf("choisesser un option pour afficher le Statistiques(1-5): ");
+    scanf("%d",&IIIsuop);
+    switch (IIIsuop){
+    case 1:
+        printf("le nombre total d'étudiants inscrits est: %d",indice+1);
+    case 2:
+        printf("le nombre d'étudiants dans le département informatique est: %d",info);
+        printf("le nombre d'étudiants dans le département physique est: %d",phy);
+        printf("le nombre d'étudiants dans le département biologie est: %d",bio);
+        printf("le nombre d'étudiants dans le département mathematiques est: %d",math);
+        printf("le nombre d'étudiants dans le département geologie est: %d",geo);
+        printf("le nombre d'étudiants dans le département chemie est: %d",chem);
+    case 3:
+        for (i=0;i<indice;i++){
+            if (list.Note_generale[i]>seuil){
+                printf("Numero unique: %d",i+1);
+                printf("nom: %99s",list.Nom[i]);
+                printf("prenom: %99s",list.prenome[i]);
+                printf("Date de naissance: %99s",list.Date_nai[i]);
+                printf("Département: %s",list.Departement[i]);
+                printf("Note générale: %f",list.Note_generale[i]);
+            }
+        }
+    case 5:
+        for(i=0;i<info;i++){
+            if(strcmp(list.Departement[i],"informatique")==0){
+                    if (list.Note_generale[i]<=10){
+                        co++;
+                    }
+            }
+        }
+        printf("Afficher le nombre d'étudiants ayant réussi dans departement informatique est: %d",co);
+        for(i=0;i<phy;i++){
+            if(strcmp(list.Departement[i],"physique")==0){
+                    if (list.Note_generale[i]<=10){
+                        co++;
+                    }
+            }
+        }
+        printf("Afficher le nombre d'étudiants ayant réussi dans departement physique est: %d",co);
+        for(i=0;i<bio;i++){
+            if(strcmp(list.Departement[i],"Biologie")==0){
+                    if (list.Note_generale[i]<=10){
+                        co++;
+                    }
+            }
+        }
+        printf("Afficher le nombre d'étudiants ayant réussi dans departement Biologie est: %d",co);
+        for(i=0;i<math;i++){
+            if(strcmp(list.Departement[i],"mathematiques")==0){
+                    if (list.Note_generale[i]<=10){
+                        co++;
+                    }
+            }
+        }
+        printf("Afficher le nombre d'étudiants ayant réussi dans departement mathematiques est: %d",co);
+        for(i=0;i<geo;i++){
+            if(strcmp(list.Departement[i],"geologie")==0){
+                    if (list.Note_generale[i]<=10){
+                        co++;
+                    }
+            }
+        }
+        printf("Afficher le nombre d'étudiants ayant réussi dans departement geologie est: %d",co);
+        for(i=0;i<chem;i++){
+            if(strcmp(list.Departement[i],"chemie")==0){
+                    if (list.Note_generale[i]<=10){
+                        co++;
+                    }
+            }
+        }
+        printf("Afficher le nombre d'étudiants ayant réussi dans departement chemie est: %d",co);
+
+    }
 }
 int main()
 {
