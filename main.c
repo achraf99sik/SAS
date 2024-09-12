@@ -21,6 +21,12 @@ int math;
 int co = 0;
 int geo;
 int chem;
+char temp_nom[max_etud][max_len];
+char temp_pren[max_etud][max_len];
+char temp_date[max_etud][max_len];
+char temp_depa[max_etud][max_len];
+int temp_numun;
+float temp;
 int indice=0;
 int Isuop;
 int IIIsuop;
@@ -55,7 +61,7 @@ int ajout(int indice){
     scanf("%99s",list.Nom[indice]);
     printf("prenom: ");
     scanf("%99s",list.prenome[indice]);
-    printf("Date de naissance: ");
+    printf("Date de naissance (jj/mm/aaaa): ");
     scanf("%99s",list.Date_nai[indice]);
     printf("================Departement================\n");
     printf("*                                         *\n");
@@ -114,7 +120,7 @@ void Modifier(int num_uni){
     scanf("%99s",list.Nom[num_uni-1]);
     printf("Nouveau prenom: ");
     scanf("%99s",list.prenome[num_uni-1]);
-    printf("Nouveau Date de naissance: ");
+    printf("Nouveau Date de naissance (jj/mm/aaaa): ");
     scanf("%99s",list.Date_nai[num_uni-1]);
     printf("================Departement================\n");
     printf("*                                         *\n");
@@ -181,9 +187,9 @@ void Afficher(int i){
         printf("================================\n");
         printf("nom: %s\n",list.Nom[i]);
         printf("prenome: %s\n",list.prenome[i]);
-        printf("Date de naissance: %s\n",list.Date_nai[i]);
+        printf("Date de naissance  (jj/mm/aaaa): %s\n",list.Date_nai[i]);
         printf("Departement: %s\n",list.Departement[i]);
-        printf("Note generale: %f\n",list.Note_generale[i]);
+        printf("Note generale: %.2f\n",list.Note_generale[i]);
         printf("================================\n");
     }
 }
@@ -251,7 +257,7 @@ float moyenne_Departement(float result){
         result += list.moyenne[i];
     }
     result = result/c;
-    printf("la moyenne generale de set departement est: %f\n",result);
+    printf("la moyenne generale de set departement est: %.2f\n",result);
 }
 float moyenne_generale(float result){
     result=0;
@@ -259,7 +265,7 @@ float moyenne_generale(float result){
         result += list.Note_generale[i];
     }
     result = result/indice;
-    printf("la moyenne generale de l'universite: %f\n",result);
+    printf("la moyenne generale de l'universite: %.2f\n",result);
 }
 void statestique(){
     printf("=====================================Statistiques=====================================\n");
@@ -277,24 +283,69 @@ void statestique(){
     switch (IIIsuop){
     case 1:
         printf("le nombre total d'étudiants inscrits est: %d",indice+1);
+        break;
     case 2:
-        printf("le nombre d'étudiants dans le département informatique est: %d",info);
-        printf("le nombre d'étudiants dans le département physique est: %d",phy);
-        printf("le nombre d'étudiants dans le département biologie est: %d",bio);
-        printf("le nombre d'étudiants dans le département mathematiques est: %d",math);
-        printf("le nombre d'étudiants dans le département geologie est: %d",geo);
-        printf("le nombre d'étudiants dans le département chemie est: %d",chem);
+        printf("le nombre d'étudiants dans le département informatique est: %d\n",info);
+        printf("le nombre d'étudiants dans le département physique est: %d\n",phy);
+        printf("le nombre d'étudiants dans le département biologie est: %d\n",bio);
+        printf("le nombre d'étudiants dans le département mathematiques est: %d\n",math);
+        printf("le nombre d'étudiants dans le département geologie est: %d\n",geo);
+        printf("le nombre d'étudiants dans le département chemie est: %d\n",chem);
+        break;
     case 3:
         for (i=0;i<indice;i++){
             if (list.Note_generale[i]>seuil){
-                printf("Numero unique: %d",i+1);
-                printf("nom: %99s",list.Nom[i]);
-                printf("prenom: %99s",list.prenome[i]);
-                printf("Date de naissance: %99s",list.Date_nai[i]);
-                printf("Département: %s",list.Departement[i]);
-                printf("Note générale: %f",list.Note_generale[i]);
+                printf("Numero unique: %d\n",i+1);
+                printf("nom: %s\n",list.Nom[i]);
+                printf("prenom: %s",list.prenome[i]);
+                printf("Date de naissance (jj/mm/aaaa): %s\n",list.Date_nai[i]);
+                printf("Département: %s\n",list.Departement[i]);
+                printf("Note générale: %.2f\n",list.Note_generale[i]);
             }
         }
+        break;
+    case 4:
+        for (i=0;i<3;i++){
+            for(int j = i+1;j<indice;j++){
+                if (list.Note_generale[i]<list.Note_generale[j]){
+                    temp=list.Note_generale[i];
+                    list.Note_generale[i]=list.Note_generale[j];
+                    list.Note_generale[j]=temp;
+
+                    strcpy(temp_nom,list.Nom[i]);
+                    strcpy(list.Nom[i],list.Nom[j]);
+                    strcpy(list.Nom[j],temp_nom);
+
+                    temp_numun=list.Numero_unique[i];
+                    list.Numero_unique[i]=list.Numero_unique[j];
+                    list.Numero_unique[j]=temp_numun;
+
+                    strcpy(temp_pren,list.prenome[i]);
+                    strcpy(list.prenome[i],list.prenome[j]);
+                    strcpy(list.prenome[j],temp_pren);
+
+                    strcpy(temp_date,list.Date_nai[i]);
+                    strcpy(list.Date_nai[i],list.Date_nai[j]);
+                    strcpy(list.Date_nai[j],temp_date);
+
+                    strcpy(temp_depa,list.Departement[i]);
+                    strcpy(list.Departement[i],list.Departement[j]);
+                    strcpy(list.Departement[j],temp_depa);
+                }
+            }
+
+        }
+        for(i=0;i<3;i++){
+            printf("================================\n");
+            printf("nom: %s\n",list.Nom[i]);
+            printf("prenome: %s\n",list.prenome[i]);
+            printf("Date de naissance  (jj/mm/aaaa): %s\n",list.Date_nai[i]);
+            printf("Departement: %s\n",list.Departement[i]);
+            printf("Note generale: %.2f\n",list.Note_generale[i]);
+            printf("Note generale: %d\n",list.Numero_unique[i]);
+            printf("================================\n");
+        }
+        break;
     case 5:
         for(i=0;i<info;i++){
             if(strcmp(list.Departement[i],"informatique")==0){
@@ -303,7 +354,7 @@ void statestique(){
                     }
             }
         }
-        printf("Afficher le nombre d'étudiants ayant réussi dans departement informatique est: %d",co);
+        printf("Afficher le nombre d'étudiants ayant réussi dans departement informatique est: %d\n",co);
         for(i=0;i<phy;i++){
             if(strcmp(list.Departement[i],"physique")==0){
                     if (list.Note_generale[i]<=10){
@@ -311,7 +362,7 @@ void statestique(){
                     }
             }
         }
-        printf("Afficher le nombre d'étudiants ayant réussi dans departement physique est: %d",co);
+        printf("Afficher le nombre d'étudiants ayant réussi dans departement physique est: %d\n",co);
         for(i=0;i<bio;i++){
             if(strcmp(list.Departement[i],"Biologie")==0){
                     if (list.Note_generale[i]<=10){
@@ -319,7 +370,7 @@ void statestique(){
                     }
             }
         }
-        printf("Afficher le nombre d'étudiants ayant réussi dans departement Biologie est: %d",co);
+        printf("Afficher le nombre d'étudiants ayant réussi dans departement Biologie est: %d\n",co);
         for(i=0;i<math;i++){
             if(strcmp(list.Departement[i],"mathematiques")==0){
                     if (list.Note_generale[i]<=10){
@@ -327,7 +378,7 @@ void statestique(){
                     }
             }
         }
-        printf("Afficher le nombre d'étudiants ayant réussi dans departement mathematiques est: %d",co);
+        printf("Afficher le nombre d'étudiants ayant réussi dans departement mathematiques est: %d\n",co);
         for(i=0;i<geo;i++){
             if(strcmp(list.Departement[i],"geologie")==0){
                     if (list.Note_generale[i]<=10){
@@ -335,7 +386,7 @@ void statestique(){
                     }
             }
         }
-        printf("Afficher le nombre d'étudiants ayant réussi dans departement geologie est: %d",co);
+        printf("Afficher le nombre d'étudiants ayant réussi dans departement geologie est: %d\n",co);
         for(i=0;i<chem;i++){
             if(strcmp(list.Departement[i],"chemie")==0){
                     if (list.Note_generale[i]<=10){
@@ -343,8 +394,137 @@ void statestique(){
                     }
             }
         }
-        printf("Afficher le nombre d'étudiants ayant réussi dans departement chemie est: %d",co);
+        printf("Afficher le nombre d'étudiants ayant réussi dans departement chemie est: %d\n",co);
+        break;
 
+
+    }
+}
+void rechercher(){
+    int optin;
+    char a[max_etud][max_len]={"informatique","physique","Biologie","mathematiques","geologie","chemie"};
+    char sear[50];
+    printf("===================================================================================\n");
+    printf("* 1) Rechercher un étudiant par son nom.                                          *\n");
+    printf("* 2) Afficher la liste des étudiants inscrits dans un département spécifique.     *\n");
+    printf("* 3) annuler.                                                                     *\n");
+    printf("===================================================================================\n");
+    printf("choisissez une option (1-3): ");
+    scanf("%d",&optin);
+    switch(optin){
+    case 1:
+        printf("entrez le nom que vous recherchez: ");
+        scanf("%49s",&sear);
+        for(i=0;i<indice;i++){
+            if (strcmp(list.Nom[i],sear)==0){
+                printf("================================\n");
+                printf("nom: %s\n",list.Nom[i]);
+                printf("prenome: %s\n",list.prenome[i]);
+                printf("Date de naissance  (jj/mm/aaaa): %s\n",list.Date_nai[i]);
+                printf("Departement: %s\n",list.Departement[i]);
+                printf("Note generale: %.2f\n",list.Note_generale[i]);
+                printf("================================\n");
+            }
+        }
+    case 2:
+        printf("================Departement================\n");
+        printf("*                                         *\n");
+        printf("* choisissez une option de list suivent:  *\n");
+        printf("*                                         *\n");
+        printf("* 1) informatique.                        *\n");
+        printf("* 2) physique.                            *\n");
+        printf("* 3) Biologie.                            *\n");
+        printf("* 4) mathematiques.                       *\n");
+        printf("* 5) geologie.                            *\n");
+        printf("* 6) chemie.                              *\n");
+        printf("*                                         *\n");
+        printf("===========================================\n");
+        Again:
+        printf("choisesser un departement (1-6): ");
+        scanf("%d",&Isuop);
+        switch(Isuop){
+        case 1:
+            for(i=0;i<indice;i++){
+                if (strcmp(list.Departement[i],a[0])==0){
+                    printf("================================\n");
+                    printf("nom: %s\n",list.Nom[i]);
+                    printf("prenome: %s\n",list.prenome[i]);
+                    printf("Date de naissance  (jj/mm/aaaa): %s\n",list.Date_nai[i]);
+                    printf("Departement: %s\n",list.Departement[i]);
+                    printf("Note generale: %.2f\n",list.Note_generale[i]);
+                    printf("================================\n");
+                    }
+            }
+            break;
+        case 2:
+            for(i=0;i<indice;i++){
+                if (strcmp(list.Departement[i],a[1])==0){
+                    printf("================================\n");
+                    printf("nom: %s\n",list.Nom[i]);
+                    printf("prenome: %s\n",list.prenome[i]);
+                    printf("Date de naissance  (jj/mm/aaaa): %s\n",list.Date_nai[i]);
+                    printf("Departement: %s\n",list.Departement[i]);
+                    printf("Note generale: %.2f\n",list.Note_generale[i]);
+                    printf("================================\n");
+                    }
+            }
+            break;
+        case 3:
+            for(i=0;i<indice;i++){
+                if (strcmp(list.Departement[i],a[2])==0){
+                    printf("================================\n");
+                    printf("nom: %s\n",list.Nom[i]);
+                    printf("prenome: %s\n",list.prenome[i]);
+                    printf("Date de naissance  (jj/mm/aaaa): %s\n",list.Date_nai[i]);
+                    printf("Departement: %s\n",list.Departement[i]);
+                    printf("Note generale: %.2f\n",list.Note_generale[i]);
+                    printf("================================\n");
+                    }
+            }
+            break;
+        case 4:
+            for(i=0;i<indice;i++){
+                if (strcmp(list.Departement[i],a[3])==0){
+                    printf("================================\n");
+                    printf("nom: %s\n",list.Nom[i]);
+                    printf("prenome: %s\n",list.prenome[i]);
+                    printf("Date de naissance  (jj/mm/aaaa): %s\n",list.Date_nai[i]);
+                    printf("Departement: %s\n",list.Departement[i]);
+                    printf("Note generale: %.2f\n",list.Note_generale[i]);
+                    printf("================================\n");
+                    }
+            }
+            break;
+        case 5:
+            for(i=0;i<indice;i++){
+                if (strcmp(list.Departement[i],a[4])==0){
+                    printf("================================\n");
+                    printf("nom: %s\n",list.Nom[i]);
+                    printf("prenome: %s\n",list.prenome[i]);
+                    printf("Date de naissance  (jj/mm/aaaa): %s\n",list.Date_nai[i]);
+                    printf("Departement: %s\n",list.Departement[i]);
+                    printf("Note generale: %.2f\n",list.Note_generale[i]);
+                    printf("================================\n");
+                    }
+            }
+            break;
+        case 6:
+            for(i=0;i<indice;i++){
+                if (strcmp(list.Departement[i],a[5])==0){
+                    printf("================================\n");
+                    printf("nom: %s\n",list.Nom[i]);
+                    printf("prenome: %s\n",list.prenome[i]);
+                    printf("Date de naissance  (jj/mm/aaaa): %s\n",list.Date_nai[i]);
+                    printf("Departement: %s\n",list.Departement[i]);
+                    printf("Note generale: %.2f\n",list.Note_generale[i]);
+                    printf("================================\n");
+                    }
+            }
+            break;
+        default:
+            printf("option unvalid!!\n");
+            goto Again;
+        }
     }
 }
 int main()
@@ -356,7 +536,6 @@ int main()
         switch(choix){
         case 1:
             indice = ajout(indice);
-            printf("%d",indice);
             break;
         case 2:
             printf("====================================================================\n");
@@ -387,6 +566,10 @@ int main()
             moyenne_generale(result);
             moyenne_Departement(result);
             break;
+        case 5:
+            statestique();
+        case 6:
+            rechercher();
         }
     }
 
