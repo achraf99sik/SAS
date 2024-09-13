@@ -538,44 +538,99 @@ char char_swap(x,y,z){
     strcpy(y,z);
 }
 void trier(){
-    for (i=0;i<indice;i++){
-        int j=i+1;
-        for(j ;j<indice;j++){
-            if (strcmp(list.Nom[j],list.Nom[i])<0){
-                temp=list.Note_generale[i];
-                list.Note_generale[i]=list.Note_generale[j];
-                list.Note_generale[j]=temp;
+    int optin;
+    printf("===================================================================================\n");
+    printf("* 1) trier de(A-Z).                                                               *\n");
+    printf("* 2) trier de(Z-A).                                                               *\n");
+    printf("* 3) annuler.                                                                     *\n");
+    printf("===================================================================================\n");
+    printf("choisissez une option (1-3): ");
+    scanf("%d",&optin);
+    switch(optin){
+        case 1:
+            for (i=0;i<indice;i++){
+                int j=i+1;
+                for(j ;j<indice;j++){
+                    if (strcmp(list.Nom[j],list.Nom[i])<0){
+                        temp=list.Note_generale[i];
+                        list.Note_generale[i]=list.Note_generale[j];
+                        list.Note_generale[j]=temp;
 
-                char_swap(list.Nom[i],list.Nom[j],temp_nom[0]);
+                        char_swap(list.Nom[i],list.Nom[j],temp_nom[0]);
 
-                temp_numun=list.Numero_unique[i];
-                list.Numero_unique[i]=list.Numero_unique[j];
-                list.Numero_unique[j]=temp_numun;
+                        temp_numun=list.Numero_unique[i];
+                        list.Numero_unique[i]=list.Numero_unique[j];
+                        list.Numero_unique[j]=temp_numun;
 
-                strcpy(temp_pren[0],list.prenome[i]);
-                strcpy(list.prenome[i],list.prenome[j]);
-                strcpy(list.prenome[j],temp_pren[0]);
+                        strcpy(temp_pren[0],list.prenome[i]);
+                        strcpy(list.prenome[i],list.prenome[j]);
+                        strcpy(list.prenome[j],temp_pren[0]);
 
-                strcpy(temp_date[0],list.Date_nai[i]);
-                strcpy(list.Date_nai[i],list.Date_nai[j]);
-                strcpy(list.Date_nai[j],temp_date[0]);
+                        strcpy(temp_date[0],list.Date_nai[i]);
+                        strcpy(list.Date_nai[i],list.Date_nai[j]);
+                        strcpy(list.Date_nai[j],temp_date[0]);
 
-                strcpy(temp_depa[0],list.Departement[i]);
-                strcpy(list.Departement[i],list.Departement[j]);
-                strcpy(list.Departement[j],temp_depa[0]);
+                        strcpy(temp_depa[0],list.Departement[i]);
+                        strcpy(list.Departement[i],list.Departement[j]);
+                        strcpy(list.Departement[j],temp_depa[0]);
+                    }
+                }
+
             }
-        }
+            for(i=0;i<indice;i++){
+                printf("================================\n");
+                printf("nom: %s\n",list.Nom[i]);
+                printf("prenome: %s\n",list.prenome[i]);
+                printf("Date de naissance  (jj/mm/aaaa): %s\n",list.Date_nai[i]);
+                printf("Departement: %s\n",list.Departement[i]);
+                printf("Note generale: %.2f\n",list.Note_generale[i]);
+                printf("le Numero unique: %d\n",list.Numero_unique[i]);
+                printf("================================\n");
+            }
+            break;
+        case 2:
+            for (i=0;i<indice;i++){
+                int j=i+1;
+                for(j ;j<indice;j++){
+                    if (strcmp(list.Nom[j],list.Nom[i])>0){
+                        temp=list.Note_generale[i];
+                        list.Note_generale[i]=list.Note_generale[j];
+                        list.Note_generale[j]=temp;
 
-    }
-    for(i=0;i<indice;i++){
-        printf("================================\n");
-        printf("nom: %s\n",list.Nom[i]);
-        printf("prenome: %s\n",list.prenome[i]);
-        printf("Date de naissance  (jj/mm/aaaa): %s\n",list.Date_nai[i]);
-        printf("Departement: %s\n",list.Departement[i]);
-        printf("Note generale: %.2f\n",list.Note_generale[i]);
-        printf("le Numero unique: %d\n",list.Numero_unique[i]);
-        printf("================================\n");
+                        char_swap(list.Nom[i],list.Nom[j],temp_nom[0]);
+
+                        temp_numun=list.Numero_unique[i];
+                        list.Numero_unique[i]=list.Numero_unique[j];
+                        list.Numero_unique[j]=temp_numun;
+
+                        strcpy(temp_pren[0],list.prenome[i]);
+                        strcpy(list.prenome[i],list.prenome[j]);
+                        strcpy(list.prenome[j],temp_pren[0]);
+
+                        strcpy(temp_date[0],list.Date_nai[i]);
+                        strcpy(list.Date_nai[i],list.Date_nai[j]);
+                        strcpy(list.Date_nai[j],temp_date[0]);
+
+                        strcpy(temp_depa[0],list.Departement[i]);
+                        strcpy(list.Departement[i],list.Departement[j]);
+                        strcpy(list.Departement[j],temp_depa[0]);
+                    }
+                }
+
+            }
+            for(i=0;i<indice;i++){
+                printf("================================\n");
+                printf("nom: %s\n",list.Nom[i]);
+                printf("prenome: %s\n",list.prenome[i]);
+                printf("Date de naissance  (jj/mm/aaaa): %s\n",list.Date_nai[i]);
+                printf("Departement: %s\n",list.Departement[i]);
+                printf("Note generale: %.2f\n",list.Note_generale[i]);
+                printf("le Numero unique: %d\n",list.Numero_unique[i]);
+                printf("================================\n");
+            }
+            break;
+        case 3:
+            break;
     }
 }
 int main()
