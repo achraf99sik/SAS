@@ -179,8 +179,10 @@ void supprimer(int num_uni){
             strcpy(list.Date_nai[count],list.Date_nai[count+1]);
             strcpy(list.Departement[count],list.Departement[count+1]);
             list.Note_generale[count]=list.Note_generale[count+1];
+            list.Numero_unique[count]=list.Numero_unique[count+1];
         }
     }
+    indice--;
 }
 void Afficher(int i){
     for (int i= 0;i<indice;i++){
@@ -190,7 +192,7 @@ void Afficher(int i){
         printf("prenome: %s\n",list.prenome[i]);
         printf("Date de naissance: %s\n",list.Date_nai[i]);
         printf("Departement: %s\n",list.Departement[i]);
-        printf("Note generale: %f\n",list.Note_generale[i]);
+        printf("Note generale: %.2f\n",list.Note_generale[i]);
         printf("================================\n");
     }
 }
@@ -553,6 +555,7 @@ void trier(){
     printf("* 3) Tri des etudiants par moyenne generale, du plus eleve au plus faible.        *\n");
     printf("* 4) Tri des etudiants par moyenne generale, du plus faible au plus eleve.        *\n");
     printf("* 5) Tri des etudiants selon leur statut de reussite.                             *\n");
+    printf("* 6) quitter                                                                      *\n");
     printf("===================================================================================\n");
     printf("choisissez une option (1-3): ");
     scanf("%d",&optin);
@@ -755,6 +758,8 @@ void trier(){
                 }
             }
             break;
+        case 6:
+            break;
     }
 }
 int main()
@@ -819,7 +824,7 @@ int main()
         case 7:
             trier();
             break;
-        case 8:
+        case 9:
             exit(0);
         }
     }
