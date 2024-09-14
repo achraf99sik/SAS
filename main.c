@@ -60,10 +60,13 @@ int ajout(int indice){
     printf("Ajouter un etudiant:\n");
     printf("Nom: ");
     scanf("%99s",list.Nom[indice]);
+    printf("---------------------------------------------------------\n");
     printf("prenom: ");
     scanf("%99s",list.prenome[indice]);
+    printf("---------------------------------------------------------\n");
     printf("Date de naissance: ");
     scanf("%99s",list.Date_nai[indice]);
+    printf("---------------------------------------------------------\n");
     printf("================Departement================\n");
     printf("*                                         *\n");
     printf("* choisissez une option de list suivent:  *\n");
@@ -79,6 +82,7 @@ int ajout(int indice){
     Again:
     printf("choisesser un departement (1-6): ");
     scanf("%d",&Isuop);
+    printf("---------------------------------------------------------\n");
     switch(Isuop){
     case 1:
         strcpy(list.Departement[indice],"informatique");
@@ -110,6 +114,7 @@ int ajout(int indice){
     }
     printf("Note generale: ");
     scanf("%f",&list.Note_generale[indice]);
+    printf("---------------------------------------------------------\n");
     list.Numero_unique[indice]=indice+1;
     indice++;
     return indice;
